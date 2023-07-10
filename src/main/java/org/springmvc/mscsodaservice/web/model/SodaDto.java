@@ -1,5 +1,6 @@
 package org.springmvc.mscsodaservice.web.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+
 
 
 @Data
@@ -25,9 +27,12 @@ public class SodaDto {
     private Long version;
 
     @Null
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
+
     private OffsetDateTime createdDate;
 
     @Null
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
     private OffsetDateTime lastModifiedDate;
 
     @NotBlank(message = "wa3333333333333333333333333333")
@@ -38,11 +43,15 @@ public class SodaDto {
     private SodaStyleNum sodaStyle;
 
     @Positive
-    private Long upc;
+    private String upc;
 
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Positive
     private BigDecimal price;
+
+    @Positive
+    private Integer minOnHand;
 
     @PositiveOrZero
     private Integer quantity;

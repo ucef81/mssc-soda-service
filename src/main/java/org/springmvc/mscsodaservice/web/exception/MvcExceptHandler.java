@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springmvc.mscsodaservice.web.controller.SodaNotFoundException;
 
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
@@ -65,5 +66,17 @@ public class MvcExceptHandler {
 
         return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(SodaNotFoundException.class)
+    public Map<String, String> handleBusinessException(SodaNotFoundException ex){
+
+        Map<String, String> errorMap = new HashMap<>();
+
+        errorMap.put("errorMassage", ex.getMessage());
+
+        return errorMap;
+    }
+
 
 }
