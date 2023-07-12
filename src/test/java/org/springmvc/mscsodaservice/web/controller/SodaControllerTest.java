@@ -43,10 +43,10 @@ class SodaControllerTest {
     @BeforeEach
     public void setUp() {
         validSoda = SodaDto.builder().id(null)
-                .name("Co")
-                .sodaStyle(SodaStyleNum.COLA)
+                .sodaName("Co")
+                .sodaStyle(SodaStyleNum.IPA)
                 .upc("12345678901").price(new BigDecimal("5.20"))
-                .quantity(10)
+                .quantity_to_brew(10)
                 .build();
     }
 

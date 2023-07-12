@@ -2,7 +2,7 @@ package org.springmvc.mscsodaservice.web.mapper;
 
 import org.mapstruct.Mapper;
 
-import org.springmvc.mscsodaservice.web.domain.Soda;
+import org.springmvc.mscsodaservice.domain.Soda;
 import org.springmvc.mscsodaservice.web.model.SodaDto;
 
 @Mapper(

@@ -1,4 +1,4 @@
-package org.springmvc.mscsodaservice.web.config;
+package org.springmvc.mscsodaservice.config;
 
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;

@@ -37,7 +37,7 @@ public class SodaDto {
 
     @NotBlank(message = "wa3333333333333333333333333333")
     @Size(min = 3,max = 10, message = "Size name have to be between 3 and 10 caracters")
-    private String name;
+    private String sodaName;
 
     @NotNull
     private SodaStyleNum sodaStyle;
@@ -54,7 +54,7 @@ public class SodaDto {
     private Integer minOnHand;
 
     @PositiveOrZero
-    private Integer quantity;
+    private Integer quantity_to_brew;
 
 
 }

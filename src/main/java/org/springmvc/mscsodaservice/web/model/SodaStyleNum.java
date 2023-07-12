@@ -1,5 +1,5 @@
 package org.springmvc.mscsodaservice.web.model;
 
 public enum SodaStyleNum {
-    WATER, TONIC_WATER, GINGER_ALE, CLUB_SODA, GINGER_SODA, COLA, LEMON_LIM
+    LAGER, PILSNER, STOUT, GOSE, PORTER, ALE, WHEAT, IPA, PALE_ALE, SAISON
 }

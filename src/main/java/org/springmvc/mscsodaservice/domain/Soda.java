@@ -1,8 +1,9 @@
-package org.springmvc.mscsodaservice.web.domain;
+package org.springmvc.mscsodaservice.domain;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springmvc.mscsodaservice.web.model.SodaStyleNum;
 
@@ -24,9 +25,10 @@ public class Soda {
 
 
     @Id
-    @GeneratedValue(generator = "uuid4")
-    @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(columnDefinition = "varchar(30)",updatable = false, nullable = false)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type="org.hibernate.type.UUIDCharType")
+    @Column(columnDefinition = "varchar(36)",updatable = false, nullable = false)
     private UUID id;
 
     @Version
@@ -48,7 +50,7 @@ public class Soda {
 
     private BigDecimal price;
     private Integer minOnHand;
-    private Integer quantity;
+    private Integer quantity_to_brew;
 
 
 

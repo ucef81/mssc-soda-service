@@ -1,4 +1,4 @@
-package org.springmvc.mscsodaservice.web.exception;
+package org.springmvc.mscsodaservice.exception;
 
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
