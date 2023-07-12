@@ -83,7 +83,7 @@ public class SodaServiceImpl implements SodaService {
         soda.setSodaStyle(sodaDto.getSodaStyle().name());
         soda.setPrice(sodaDto.getPrice());
         soda.setUpc(sodaDto.getUpc());
-        soda.setMinOnHand(sodaDto.getMinOnHand());
+        soda.setQuantityOnHand(sodaDto.getQuantityOnHand());
         return sodaMapper.sodaToSodaDto(sodaRepository.save(soda));
 
 

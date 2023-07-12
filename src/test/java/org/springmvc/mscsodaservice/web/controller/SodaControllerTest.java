@@ -46,7 +46,7 @@ class SodaControllerTest {
                 .sodaName("Co")
                 .sodaStyle(SodaStyleNum.IPA)
                 .upc("12345678901").price(new BigDecimal("5.20"))
-                .quantity_to_brew(10)
+                .quantityOnHand(10)
                 .build();
     }
 

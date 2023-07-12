@@ -54,7 +54,7 @@ public class SodaDto {
     private Integer minOnHand;
 
     @PositiveOrZero
-    private Integer quantity_to_brew;
+    private Integer quantityOnHand;
 
 
 }

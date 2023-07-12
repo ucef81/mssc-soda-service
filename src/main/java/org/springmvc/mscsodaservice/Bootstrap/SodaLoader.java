@@ -27,22 +27,19 @@ public class SodaLoader implements CommandLineRunner {
         if (sodaRepository.count() == 0) {
             sodaRepository.save(Soda.builder().sodaName("Orangina")
                     .sodaStyle("CLUB_SODA")
-                    .minOnHand(1)
-                    .quantity_to_brew(20)
+                    .quantityOnHand(20)
                     .upc(BEER_1_UPC)
                     .price(new BigDecimal("8.10"))
                     .build());
             sodaRepository.save(Soda.builder().sodaName("Oulmes")
                     .sodaStyle("TONIC_WATER")
-                    .minOnHand(1)
-                    .quantity_to_brew(18)
+                    .quantityOnHand(20)
                     .upc(BEER_2_UPC)
                     .price(new BigDecimal("10.20"))
                     .build());
             sodaRepository.save(Soda.builder().sodaName("AIN SULTAN")
                     .sodaStyle("WATER")
-                    .minOnHand(1)
-                    .quantity_to_brew(20)
+                    .quantityOnHand(20)
                     .upc(BEER_3_UPC)
                     .price(new BigDecimal("5.00"))
                     .build());
