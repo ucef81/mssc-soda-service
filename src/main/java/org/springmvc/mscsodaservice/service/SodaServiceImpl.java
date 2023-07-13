@@ -14,6 +14,7 @@ import org.springmvc.mscsodaservice.repository.SodaRepository;
 import org.springmvc.mscsodaservice.web.model.SodaPagedList;
 import org.springmvc.mscsodaservice.web.model.SodaStyleNum;
 
+import org.springframework.cache.annotation.Cacheable;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -27,7 +28,8 @@ public class SodaServiceImpl implements SodaService {
     private final SodaMapper sodaMapper;
 
     @Override
-    public SodaPagedList getAllSodas(String sodaName, SodaStyleNum sodaStyle, PageRequest pageRequest) {
+    @Cacheable(cacheNames = "sodaListCache", condition = "#showInventoryOnHand == false ")
+    public SodaPagedList getAllSodas(String sodaName, SodaStyleNum sodaStyle, PageRequest pageRequest, boolean showInventoryOnHand) {
 
 
         SodaPagedList sodaPagedList;
@@ -35,37 +37,67 @@ public class SodaServiceImpl implements SodaService {
 
             if(StringUtils.hasLength(sodaName) && sodaStyle != null ){
                 sodaPage = sodaRepository.findAllBySodaNameAndSodaStyle(sodaName,sodaStyle, pageRequest);
-                System.out.println("111111111111111111111111111");
+
             }
 
             else if(StringUtils.hasLength(sodaName) && sodaStyle == null) {
                 sodaPage = sodaRepository.findAllBySodaName(sodaName, pageRequest);
-                System.out.println("22222222222222222222222222");
+
             }
 
             else if(!StringUtils.hasLength(sodaName) && sodaStyle != null) {
                 sodaPage = sodaRepository.findAllBySodaStyle(sodaStyle, pageRequest);
-                System.out.println("33333333333333333333333333333");
+
             }
             else {
                 sodaPage = sodaRepository.findAll(pageRequest);
-                System.out.println("44444444444444444444444444");
+
             }
-            return new SodaPagedList(sodaPage.stream()
-                    .map(sodaMapper::sodaToSodaDto)
-                    .collect(Collectors.toList()),
-                    PageRequest.of(
-                            sodaPage.getPageable().getPageNumber(),
-                            sodaPage.getPageable().getPageSize()
-                    ),
-                    sodaPage.getTotalElements());
+
+            if (showInventoryOnHand) {
+                return new SodaPagedList(sodaPage.stream()
+                        .map(sodaMapper::sodaToSodaDtoWithInventory)
+                        .collect(Collectors.toList()),
+                        PageRequest.of(
+                                sodaPage.getPageable().getPageNumber(),
+                                sodaPage.getPageable().getPageSize()
+                        ),
+                        sodaPage.getTotalElements());
+            }
+            else{
+                return new SodaPagedList(sodaPage.stream()
+                        .map(sodaMapper::sodaToSodaDto)
+                        .collect(Collectors.toList()),
+                        PageRequest.of(
+                                sodaPage.getPageable().getPageNumber(),
+                                sodaPage.getPageable().getPageSize()
+                        ),
+                        sodaPage.getTotalElements());
+
+            }
 
     }
 
+   // @Cacheable(cacheNames = "sodaUpcCache", condition = "#showInventoryOnHand == false ")
     @Override
-    public SodaDto getById(UUID id) throws SodaNotFoundException {
-        return sodaMapper.sodaToSodaDto(sodaRepository.findById(id)
+    public SodaDto getByUpc(String upc, boolean showInventoryOnHand) {
+        if (showInventoryOnHand)
+            return sodaMapper.sodaToSodaDtoWithInventory(sodaRepository.findByUpc(upc));
+        else
+            return sodaMapper.sodaToSodaDto(sodaRepository.findByUpc(upc));
+    }
+
+
+    @Cacheable(cacheNames = "sodaCache", key = "#sodaId", condition = "#showInventoryOnHand == false ")
+    @Override
+    public SodaDto getById(UUID id, boolean showInventoryOnHand) throws SodaNotFoundException {
+        if (showInventoryOnHand)
+             return sodaMapper.sodaToSodaDtoWithInventory(sodaRepository.findById(id)
                 .orElseThrow(() -> new SodaNotFoundException("Object with this Id not found")));
+        else
+            return sodaMapper.sodaToSodaDto(sodaRepository.findById(id)
+                    .orElseThrow(() -> new SodaNotFoundException("Object with this Id not found")));
+
     }
 
     @Override

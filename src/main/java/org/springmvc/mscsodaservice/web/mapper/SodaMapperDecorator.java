@@ -5,7 +5,7 @@ import org.springmvc.mscsodaservice.domain.Soda;
 import org.springmvc.mscsodaservice.service.inventory.SodaInventoryService;
 import org.springmvc.mscsodaservice.web.model.SodaDto;
 
-public  class SodaMapperDecorator implements SodaMapper{
+public  abstract class SodaMapperDecorator implements SodaMapper{
 
     private SodaInventoryService sodaInventoryService;
     private SodaMapper mapper;
@@ -22,6 +22,11 @@ public  class SodaMapperDecorator implements SodaMapper{
 
     @Override
     public SodaDto sodaToSodaDto(Soda soda) {
+        return  mapper.sodaToSodaDto(soda);
+    }
+
+    @Override
+    public SodaDto sodaToSodaDtoWithInventory(Soda soda) {
         SodaDto dto = mapper.sodaToSodaDto(soda);
         dto.setQuantityOnHand(sodaInventoryService.getOnHandInventory(soda.getId()));
         return dto;

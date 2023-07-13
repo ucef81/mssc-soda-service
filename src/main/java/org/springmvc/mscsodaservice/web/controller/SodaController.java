@@ -13,9 +13,8 @@ import org.springmvc.mscsodaservice.web.model.SodaStyleNum;
 
 import java.util.UUID;
 
-@RequestMapping("/api/v1/soda")
+@RequestMapping("/api/v1/")
 @RestController
-
 @RequiredArgsConstructor
 public class SodaController {
 
@@ -25,11 +24,12 @@ public class SodaController {
     private final SodaService sodaService;
 
 
-    @GetMapping(produces = "application/json")
+    @GetMapping(produces = "application/json", path = "soda")
     public ResponseEntity<SodaPagedList> listSodas(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
                                                    @RequestParam(value = "pageSize", required = false) Integer pageSize,
                                                    @RequestParam(value = "sodaName", required = false) String sodaName,
-                                                   @RequestParam(value = "sodaStyle", required = false) SodaStyleNum sodaStyle) {
+                                                   @RequestParam(value = "sodaStyle", required = false) SodaStyleNum sodaStyle,
+                                                   @RequestParam(value = "showInventoryOnHand", required = false) boolean showInventoryOnHand) {
 
         if (pageNumber == null || pageNumber < 0){
             pageNumber = DEFAULT_PAGE_NUMBER;
@@ -39,25 +39,34 @@ public class SodaController {
             pageSize = DEFAULT_PAGE_SIZE;
         }
 
-        SodaPagedList sodaList = sodaService.getAllSodas(sodaName, sodaStyle, PageRequest.of(pageNumber, pageSize));
+        SodaPagedList sodaList = sodaService.getAllSodas(sodaName, sodaStyle, PageRequest.of(pageNumber, pageSize), showInventoryOnHand);
         return new ResponseEntity<>(sodaList, HttpStatus.OK);
     }
 
 
 
-    @GetMapping("/{sodaId}")
-    public ResponseEntity<SodaDto> getSodaById(@PathVariable UUID sodaId) throws SodaNotFoundException {
-        return new ResponseEntity<>(sodaService.getById(sodaId), HttpStatus.OK);
+    @GetMapping("soda/{sodaId}")
+    public ResponseEntity<SodaDto> getSodaById(@PathVariable UUID sodaId,
+                                               @RequestParam(value = "showInventoryOnHand", required = false) boolean showInventoryOnHand)
+                                            throws SodaNotFoundException {
+        return new ResponseEntity<>(sodaService.getById(sodaId, showInventoryOnHand), HttpStatus.OK);
     }
 
-    @PostMapping
+    @GetMapping("sodaUpc/{upc}")
+    public ResponseEntity<SodaDto> getSodaByUpc(@PathVariable String upc ,
+                                                @RequestParam(value = "showInventoryOnHand", required = false) boolean showInventoryOnHand)
+                                             {
+        return new ResponseEntity<>(sodaService.getByUpc(upc,showInventoryOnHand), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "soda")
     public ResponseEntity handlePost(@Validated  @RequestBody  SodaDto sodaDto){
 
         return new ResponseEntity(sodaService.saveNewSoda(sodaDto),HttpStatus.CREATED);
 
     }
 
-    @PutMapping("/{sodaId}")
+    @PutMapping("soda/{sodaId}")
     public ResponseEntity handleUpdate(@PathVariable UUID sodaId,@Validated @RequestBody SodaDto sodaDto) throws SodaNotFoundException {
 
 
@@ -66,7 +75,7 @@ public class SodaController {
     }
 
 
-    @DeleteMapping("/{sodaId}")
+    @DeleteMapping("soda/{sodaId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void handleDelete(@PathVariable UUID sodaId){
         

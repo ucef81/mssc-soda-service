@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Version;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -18,8 +19,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SodaDto {
+public class SodaDto implements Serializable {
 
+    static final long serialVersionUID = -5815566940065181210L;
     @Null
     private UUID id;
 
@@ -50,8 +52,7 @@ public class SodaDto {
     @Positive
     private BigDecimal price;
 
-    @Positive
-    private Integer minOnHand;
+
 
     @PositiveOrZero
     private Integer quantityOnHand;

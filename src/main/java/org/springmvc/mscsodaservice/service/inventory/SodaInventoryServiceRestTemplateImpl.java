@@ -21,7 +21,7 @@ import java.util.UUID;
 @Component
 public class SodaInventoryServiceRestTemplateImpl implements SodaInventoryService {
 
-    private final  String INVENTORY_PATH = "/api/v1/soda/{sodaId}/Inventory";
+    private final  String INVENTORY_PATH = "/api/v1/soda/{sodaId}/inventory";
 
     @Autowired
     private  RestTemplate restTemplate;

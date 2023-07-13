@@ -14,5 +14,6 @@ public interface SodaRepository extends JpaRepository<Soda, UUID> , JpaSpecifica
     Page<Soda> findAllBySodaNameAndSodaStyle(String sodaName, SodaStyleNum sodaStyle, PageRequest pageRequest);
     Page<Soda> findAllBySodaName(String sodaName, PageRequest pageRequest);
     Page<Soda> findAllBySodaStyle(SodaStyleNum sodaStyle, PageRequest pageRequest);
+    Soda findByUpc(String upc);
 
 }
