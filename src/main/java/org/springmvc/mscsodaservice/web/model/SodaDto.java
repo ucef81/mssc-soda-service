@@ -53,6 +53,8 @@ public class SodaDto implements Serializable {
     private BigDecimal price;
 
 
+    @Positive
+    private Integer minOnHand;
 
     @PositiveOrZero
     private Integer quantityOnHand;

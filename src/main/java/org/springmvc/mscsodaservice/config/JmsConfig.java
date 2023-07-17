@@ -10,7 +10,7 @@ import org.springframework.jms.support.converter.MessageType;
 @Configuration
 public class JmsConfig {
 
-    public static final String MY_QUEUE = "my_queue";
+    public static final String MY_QUEUE = "soda_queue";
 
     @Bean
     public MessageConverter messageConverter(){

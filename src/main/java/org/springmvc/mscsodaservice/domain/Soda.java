@@ -5,10 +5,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springmvc.mscsodaservice.web.model.SodaStyleNum;
 
 import javax.persistence.*;
-import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -50,7 +48,11 @@ public class Soda {
     private String upc;
 
     private BigDecimal price;
-   
+
+
+    private Integer minOnHand;
+
+
     private Integer quantityOnHand;
 
 
