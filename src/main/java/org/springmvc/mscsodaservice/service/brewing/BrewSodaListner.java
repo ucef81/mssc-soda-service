@@ -1,6 +1,7 @@
 package org.springmvc.mscsodaservice.service.brewing;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class BrewSodaListner {
     private final SodaRepository sodaRepository;
     private final JmsTemplate jmsTemplate;
+    private ObjectMapper mapper;
 
     @Transactional
     @JmsListener(destination= JmsConfig.MY_QUEUE)

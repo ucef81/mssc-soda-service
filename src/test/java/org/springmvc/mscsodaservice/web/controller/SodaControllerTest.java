@@ -1,8 +1,6 @@
 package org.springmvc.mscsodaservice.web.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +8,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springmvc.mscsodaservice.web.model.SodaDto;
-import org.springmvc.mscsodaservice.web.model.SodaStyleNum;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(SodaController.class)
 class SodaControllerTest {
@@ -44,7 +37,7 @@ class SodaControllerTest {
     public void setUp() {
         validSoda = SodaDto.builder().id(null)
                 .sodaName("Co")
-                .sodaStyle(SodaStyleNum.IPA)
+                .sodaStyle("IPA")
                 .upc("12345678901").price(new BigDecimal("5.20"))
                 .quantityOnHand(10)
                 .build();
