@@ -1,13 +1,15 @@
 package org.springmvc.mscsodaservice.events;
 
 
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springmvc.mscsodaservice.web.model.SodaDto;
 
 
 public class BrewSodaEvent extends SodaEvent{
 
-    public BrewSodaEvent(SodaDto sodaDto) {
+    @JsonCreator
+    public BrewSodaEvent(@JsonProperty("sodaDto") SodaDto sodaDto) {
         super(sodaDto);
     }
 }

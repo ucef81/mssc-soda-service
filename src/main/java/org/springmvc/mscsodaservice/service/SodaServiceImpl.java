@@ -1,21 +1,19 @@
 package org.springmvc.mscsodaservice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springmvc.mscsodaservice.web.controller.SodaNotFoundException;
 import org.springmvc.mscsodaservice.domain.Soda;
+import org.springmvc.mscsodaservice.repository.SodaRepository;
+import org.springmvc.mscsodaservice.web.controller.SodaNotFoundException;
 import org.springmvc.mscsodaservice.web.mapper.SodaMapper;
 import org.springmvc.mscsodaservice.web.model.SodaDto;
-import org.springmvc.mscsodaservice.repository.SodaRepository;
 import org.springmvc.mscsodaservice.web.model.SodaPagedList;
 import org.springmvc.mscsodaservice.web.model.SodaStyleNum;
 
-import org.springframework.cache.annotation.Cacheable;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -112,7 +110,7 @@ public class SodaServiceImpl implements SodaService {
         Soda soda = sodaRepository.findById(id)
                 .orElseThrow(() -> new SodaNotFoundException("Object with this Id not found"));
         soda.setSodaName(sodaDto.getSodaName());
-        soda.setSodaStyle(sodaDto.getSodaStyle().name());
+        soda.setSodaStyle(sodaDto.getSodaStyle());
         soda.setPrice(sodaDto.getPrice());
         soda.setUpc(sodaDto.getUpc());
         soda.setQuantityOnHand(sodaDto.getQuantityOnHand());

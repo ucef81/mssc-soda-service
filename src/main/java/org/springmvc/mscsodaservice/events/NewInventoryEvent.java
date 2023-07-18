@@ -1,12 +1,14 @@
 package org.springmvc.mscsodaservice.events;
 
 
-import lombok.NoArgsConstructor;
-import org.springframework.jms.annotation.EnableJms;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springmvc.mscsodaservice.web.model.SodaDto;
 
 public class NewInventoryEvent extends SodaEvent {
-    public NewInventoryEvent(SodaDto sodaDto) {
+
+    @JsonCreator
+    public NewInventoryEvent(@JsonProperty("sodaDto") SodaDto sodaDto) {
         super(sodaDto);
     }
 }

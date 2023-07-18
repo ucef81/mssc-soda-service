@@ -42,7 +42,7 @@ public class SodaDto implements Serializable {
     private String sodaName;
 
     @NotNull
-    private SodaStyleNum sodaStyle;
+    private String sodaStyle;
 
     @Positive
     private String upc;
