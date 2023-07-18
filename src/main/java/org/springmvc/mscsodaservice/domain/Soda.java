@@ -54,7 +54,7 @@ public class Soda {
 
 
     private Integer quantityOnHand;
-
+    private Integer quantityToBrew;
 
 
 
