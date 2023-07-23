@@ -7,12 +7,13 @@ import java.io.Serializable;
 
 
 @Data
+@AllArgsConstructor
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class SodaEvent implements Serializable {
 
     static final long serialVersionUID = 5815566940065181210L;
-    private  final  SodaDto sodaDto;
+    private    SodaDto sodaDto;
 
 
 

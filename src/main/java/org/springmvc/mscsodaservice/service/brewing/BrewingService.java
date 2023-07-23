@@ -14,41 +14,20 @@ import org.springmvc.mscsodaservice.web.mapper.SodaMapper;
 
 import java.util.List;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 1eeb2fee545f71628849b10dc935c0b498246222
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BrewingService {
-<<<<<<< HEAD
 
-=======
->>>>>>> 1eeb2fee545f71628849b10dc935c0b498246222
     private final SodaRepository sodaRepository;
     private final SodaInventoryService sodaInventoryService;
     private final JmsTemplate jmsTemplate;
     private final SodaMapper sodaMapper;
 
-<<<<<<< HEAD
-    @Scheduled(fixedRate = 5000)
-    public void checkForLowInventory() {
-        List<Soda> sodas = sodaRepository.findAll();
-        sodas.forEach(soda -> {
-            Integer invQOH = sodaInventoryService.getOnHandInventory(soda.getId());
-            log.info("Min Onhand is : " + soda.getMinOnHand());
-            if (soda.getMinOnHand() >= invQOH) {
-                log.info(" invQOH is : " + invQOH);
-                jmsTemplate.convertAndSend(JmsConfig.MY_QUEUE, new BrewSodaEvent(sodaMapper.sodaToSodaDto(soda)));
 
-            }
-        });
-    }
 
-}
 
-=======
     @Scheduled(fixedRate = 5000) //every 5 seconds
     public void checkForLowInventory(){
         List<Soda> sodas = sodaRepository.findAll();
@@ -60,10 +39,11 @@ public class BrewingService {
             log.debug("Inventory is: "  + invQOH);
 
             if(soda.getMinOnHand() >= invQOH){
-                jmsTemplate.convertAndSend(JmsConfig.MY_QUEUE, new BrewSodaEvent(sodaMapper.sodaToSodaDto((soda))));
+                BrewSodaEvent brew = new BrewSodaEvent(sodaMapper.sodaToSodaDto(soda));
+                jmsTemplate.convertAndSend(JmsConfig.MY_QUEUE,brew);
             }
         });
 
     }
 }
->>>>>>> 1eeb2fee545f71628849b10dc935c0b498246222
+

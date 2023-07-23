@@ -22,9 +22,11 @@ import javax.jms.JMSException;
 @EnableJms
 public class JmsConfig {
 
-    public static final String NEW_INVENTORY_QUEUE = "new_inventory_queue";
+    public static final String NEW_INVENTORY_QUEUE = "new_inventory_event";
+    public static final String VALIDATE_ORDER_QUEUE = "validate_order_queue";
+    public static final String VALIDATE_ORDER_RESPONSE_QUEUE = "validate_order_response_queue";
 
-    public static final String MY_QUEUE = "soda_queue";
+    public static final String MY_QUEUE = "soda_message";
 
 
     @Bean
@@ -37,29 +39,7 @@ public class JmsConfig {
         return  converter;
     }
 
-    @Bean
-    public JmsListenerContainerFactory<?> jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(messageConverter());
-        return factory;
-    }
 
-    @Bean
-    public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
-        JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
-        jmsTemplate.setMessageConverter(messageConverter());
-        return jmsTemplate;
-    }
-
-    @Bean
-    public ConnectionFactory connectionFactory() throws JMSException {
-        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
-        factory.setBrokerURL("tcp://localhost:61616");
-        factory.setUser("artemis");
-        factory.setPassword("simetraehcapa");
-        return factory;
-    }
 
     @Bean
     public ObjectMapper objectMapper() {

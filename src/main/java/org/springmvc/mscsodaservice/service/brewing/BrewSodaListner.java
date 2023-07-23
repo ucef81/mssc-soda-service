@@ -34,6 +34,8 @@ public class BrewSodaListner {
         soda.ifPresent(sodaEvent -> {
             dto.setQuantityOnHand(sodaEvent.getQuantityToBrew());
             NewInventoryEvent newInventoryEvent = new NewInventoryEvent(dto);
+            log.info("Checking Inventory for: " + sodaEvent.getSodaName() + " / " + dto.getQuantityOnHand());
+            //newInventoryEvent.setSodaDto(dto);
             jmsTemplate.convertAndSend(JmsConfig.NEW_INVENTORY_QUEUE, newInventoryEvent);
             log.info(newInventoryEvent.toString());
                 });
